@@ -14,8 +14,8 @@ export default function App() {
         <Route path="/login" element={<LoginPage />} />
         <Route path="/registration" element={<Registration />} />
         <Route path="/contacts" element={<ContactsPage />} />
-        <Route path="*" element={<NotFound />} />
       </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
   );
 }
