@@ -1,12 +1,5 @@
 import { MdDelete, MdEdit, MdPerson, MdPhone } from "react-icons/md";
 import { useDispatch } from "react-redux";
-// import { deleteContact } from "../../redux/contactsOps.js";
-
-// export default function Contact({ data: { name, number } }) {
-// const dispatch = useDispatch();
-// const handleDelete = () => {
-//     dispatch(deleteContact(id));
-// };
 
 import {
   Card,
@@ -15,8 +8,13 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
+import { deleteContact } from "../../redux/contacts/operatins.js";
 
-export function ContactCard({ data: { name, number } }) {
+export function ContactCard({ data: { id, name, number } }) {
+  const dispatch = useDispatch();
+  const handleDelete = () => {
+    dispatch(deleteContact(id));
+  };
   return (
     <Card className="mt-6">
       <CardBody>
@@ -33,7 +31,7 @@ export function ContactCard({ data: { name, number } }) {
         </Typography>
       </CardBody>
       <CardFooter className="pt-0 flex items-center justify-center gap-4 ">
-        <Button className="flex items-center gap-3 w-32">
+        <Button className="flex items-center gap-3 w-32" onClick={handleDelete}>
           <MdDelete size={20} /> Delete
         </Button>
         <Button className="flex items-center gap-3 w-32">
