@@ -8,12 +8,13 @@ import {
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import AuthNavList from "./AuthNavList.jsx";
-import { selectIsLoggedIn } from "../../redux/auth/selectors.js";
+import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors.js";
 import UserNavList from "./UserNavList.jsx";
 
 export default function NavBar() {
   const [openNav, setOpenNav] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const { name } = useSelector(selectUser);
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -32,6 +33,11 @@ export default function NavBar() {
           >
             PHONE BOOK
           </Typography>
+          {name && (
+            <Typography className="mr-4 cursor-pointer py-1.5 font-bold">
+              Welcome {name}
+            </Typography>
+          )}
           <div className="flex items-center gap-4">
             <div className="mr-4 hidden lg:block">
               {isLoggedIn ? <UserNavList /> : <AuthNavList />}
@@ -88,7 +94,7 @@ export default function NavBar() {
         </div>
         <Collapse open={openNav}>
           <div className="container mx-auto">
-            <AuthNavList />
+            {isLoggedIn ? <UserNavList /> : <AuthNavList />}
             {isLoggedIn && (
               <div className="flex items-center gap-x-1">
                 <Button fullWidth variant="text" size="sm" className="">

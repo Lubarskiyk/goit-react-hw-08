@@ -9,13 +9,11 @@ const TextInput = props => {
         {...props}
         variant="outlined"
         color="blue-gray"
-        size="lg"
         onChange={onChange}
         onBlur={onBlur}
         value={value}
         error={error}
         success={success}
-        className="min-w-72"
       />
       {error && <p className="mt-1 text-red-600 max-w-72">{text}</p>}
       {success && <p className="mt-1 text-green-600 max-w-72">Valid...</p>}

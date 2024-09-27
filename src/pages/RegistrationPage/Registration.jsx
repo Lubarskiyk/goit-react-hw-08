@@ -1,14 +1,13 @@
 // @components
 import { Card, CardBody } from "@material-tailwind/react";
+import { useDispatch } from "react-redux";
 import { Formik } from "formik";
-import * as Yup from "yup";
-
 import HeaderCard from "../../components/HeaderCard/HeaderCard.jsx";
 import SubmitButton from "../../components/SubmitButton/SubmitButton.jsx";
 import TextInput from "../../components/TextInput/TextInput.jsx";
 import Label from "../../components/Label/Label.jsx";
-import { useDispatch } from "react-redux";
 import { register } from "../../redux/auth/operations.js";
+import { validationSinginSchema } from "./ValidationSingin.js";
 
 export default function Registration() {
   const dispatch = useDispatch();
@@ -36,26 +35,7 @@ export default function Registration() {
             password: "",
             passwordConfirmation: "",
           }}
-          validationSchema={Yup.object({
-            userName: Yup.string()
-              .matches(/^[A-Za-z ]*$/, "Please enter valid name")
-              .max(40)
-              .min(4)
-              .required("Required"),
-            email: Yup.string()
-              .email("Invalid email address")
-              .required("Required"),
-            password: Yup.string()
-              .required("Required")
-              .min(8, "Password is too short - should be 8 chars minimum.")
-              .matches(
-                /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-                "Include at least one Uppercase, Lowercase, Number and a special character"
-              ),
-            passwordConfirmation: Yup.string()
-              .required("Required")
-              .oneOf([Yup.ref("password"), null], "Passwords must match"),
-          })}
+          validationSchema={validationSinginSchema}
           onSubmit={handleSubmit}
         >
           {({
