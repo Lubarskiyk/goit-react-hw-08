@@ -1,21 +1,22 @@
 import { useDispatch } from "react-redux";
 import { Button } from "@material-tailwind/react";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { AddContactDialog } from "../../components/AddContactModal/AddContactModal.jsx";
-import { fetchContacts } from "../../redux/contacts/operatins.js";
+import { fetchContacts } from "../../redux/contacts/operations.js";
 import SearchBox from "../../components/SearchBox/SearshBox.jsx";
 import ContactList from "../../components/ContactList/ContactList.jsx";
+import { openCloseModal } from "../../redux/modal/slice.js";
 
 export default function ContactsPage() {
   const dispatch = useDispatch();
-  const [open, setOpen] = useState(false);
-  const handleOpen = () => setOpen(cur => !cur);
+
+  const handleOpen = () => dispatch(openCloseModal());
   useEffect(() => {
     dispatch(fetchContacts());
   }, [dispatch]);
 
   return (
-    <>
+    <div>
       <div>
         <div className="flex items-center justify-center gap-6 flex-wrap">
           <SearchBox />
@@ -23,7 +24,7 @@ export default function ContactsPage() {
         </div>
         <ContactList />
       </div>
-      <AddContactDialog open={open} handleOpen={handleOpen} />
-    </>
+      <AddContactDialog />
+    </div>
   );
 }

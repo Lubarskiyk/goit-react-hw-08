@@ -2,24 +2,30 @@ import { Dialog, Card, CardBody } from "@material-tailwind/react";
 import HeaderCard from "../HeaderCard/HeaderCard.jsx";
 import { Formik } from "formik";
 import { ValidationContactSchema } from "./ValidationContactSchema.js";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import Label from "../Label/Label.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 import SubmitButton from "../SubmitButton/SubmitButton.jsx";
-import { addContact } from "../../redux/contacts/operatins.js";
+import { addContact } from "../../redux/contacts/operations.js";
+import { openCloseModal, selectModal } from "../../redux/modal/slice.js";
 
-export function AddContactDialog({ open, handleOpen }) {
+export function AddContactDialog() {
   const dispatch = useDispatch();
+  const open = useSelector(selectModal);
   function handleSubmit(values, actions) {
     dispatch(addContact(values));
+    handle();
     actions.resetForm();
+  }
+  function handle() {
+    dispatch(openCloseModal());
   }
   return (
     <>
       <Dialog
         size="xs"
         open={open}
-        handler={handleOpen}
+        handler={handle}
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">

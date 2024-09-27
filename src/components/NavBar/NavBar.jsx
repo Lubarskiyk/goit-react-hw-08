@@ -6,15 +6,17 @@ import {
   Typography,
 } from "@material-tailwind/react";
 import { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AuthNavList from "./AuthNavList.jsx";
 import { selectIsLoggedIn, selectUser } from "../../redux/auth/selectors.js";
 import UserNavList from "./UserNavList.jsx";
+import { logOut } from "../../redux/auth/operations.js";
 
 export default function NavBar() {
   const [openNav, setOpenNav] = useState(false);
   const isLoggedIn = useSelector(selectIsLoggedIn);
   const { name } = useSelector(selectUser);
+  const dispatch = useDispatch();
   useEffect(() => {
     window.addEventListener(
       "resize",
@@ -48,6 +50,7 @@ export default function NavBar() {
                   variant="text"
                   size="sm"
                   className="hidden lg:inline-block"
+                  onClick={() => dispatch(logOut())}
                 >
                   <span>Log Out</span>
                 </Button>
@@ -97,7 +100,12 @@ export default function NavBar() {
             {isLoggedIn ? <UserNavList /> : <AuthNavList />}
             {isLoggedIn && (
               <div className="flex items-center gap-x-1">
-                <Button fullWidth variant="text" size="sm" className="">
+                <Button
+                  fullWidth
+                  variant="text"
+                  size="sm"
+                  onClick={() => dispatch(logOut())}
+                >
                   <span>Log Out</span>
                 </Button>
               </div>

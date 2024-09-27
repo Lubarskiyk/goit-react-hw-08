@@ -8,7 +8,7 @@ import {
   Typography,
   Button,
 } from "@material-tailwind/react";
-import { deleteContact } from "../../redux/contacts/operatins.js";
+import { deleteContact } from "../../redux/contacts/operations.js";
 
 export function ContactCard({ data: { id, name, number } }) {
   const dispatch = useDispatch();
@@ -23,10 +23,10 @@ export function ContactCard({ data: { id, name, number } }) {
           color="blue-gray"
           className="flex items-center gap-3"
         >
-          <MdPerson /> {name}
+          <MdPerson size={20} /> {name}
         </Typography>
         <Typography className="flex items-center gap-3">
-          <MdPhone />
+          <MdPhone size={20} />
           {number}
         </Typography>
       </CardBody>
