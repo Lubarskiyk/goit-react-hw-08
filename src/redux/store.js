@@ -13,7 +13,7 @@ import storage from "redux-persist/lib/storage";
 import { authReducer } from "./auth/slise.js";
 import { phoneBookReducer } from "./contacts/slice.js";
 import filtersReducer from "./filters/slice.js";
-import modalReducer from "./modal/slice.js";
+import modalReducer from "./modalContact/slice.js";
 
 const authPersistConfig = {
   key: "auth",

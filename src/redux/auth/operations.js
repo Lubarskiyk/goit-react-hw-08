@@ -1,6 +1,7 @@
 import axios from "axios";
 import { createAsyncThunk } from "@reduxjs/toolkit";
 import { clearAuthHeader, setAuthHeader } from "../../api/operationsApi.js";
+import { condition } from "../condition.js";
 
 export const register = createAsyncThunk(
   "auth/register",
@@ -51,9 +52,6 @@ export const refreshUser = createAsyncThunk(
     }
   },
   {
-    condition: (_, thunkAPI) => {
-      const state = thunkAPI.getState();
-      return state.auth.token !== null;
-    },
+    condition: condition,
   }
 );

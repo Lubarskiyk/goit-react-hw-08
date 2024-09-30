@@ -6,19 +6,30 @@ import { useDispatch, useSelector } from "react-redux";
 import Label from "../Label/Label.jsx";
 import TextInput from "../TextInput/TextInput.jsx";
 import SubmitButton from "../SubmitButton/SubmitButton.jsx";
-import { addContact } from "../../redux/contacts/operations.js";
-import { openCloseModal, selectModal } from "../../redux/modal/slice.js";
+import { addContact, editContact } from "../../redux/contacts/operations.js";
+import {
+  openCloseModal,
+  selectModal,
+  selectModalItems,
+} from "../../redux/modalContact/slice.js";
 
 export function AddContactDialog() {
   const dispatch = useDispatch();
   const open = useSelector(selectModal);
+  const items = useSelector(selectModalItems);
+  const text = !items.name ? "Add contact" : "Edit contact";
   function handleSubmit(values, actions) {
-    dispatch(addContact(values));
+    if (!items.name) {
+      dispatch(addContact(values));
+    } else {
+      values.id = items.id;
+      dispatch(editContact(values));
+    }
     handle();
     actions.resetForm();
   }
   function handle() {
-    dispatch(openCloseModal());
+    dispatch(openCloseModal(items));
   }
   return (
     <>
@@ -29,12 +40,12 @@ export function AddContactDialog() {
         className="bg-transparent shadow-none"
       >
         <Card className="mx-auto w-full max-w-[24rem]">
-          <HeaderCard text="Add new contact" />
+          <HeaderCard text={text} />
           <CardBody className="p-6 pt-2 flex flex-col gap-4">
             <Formik
               initialValues={{
-                name: "",
-                number: "",
+                name: items.name,
+                number: items.number,
               }}
               onSubmit={handleSubmit}
               validationSchema={ValidationContactSchema}
@@ -78,7 +89,7 @@ export function AddContactDialog() {
                       text={errors.number}
                     />
                   </div>
-                  <SubmitButton text="Add Contact" />
+                  <SubmitButton text={text} />
                 </form>
               )}
             </Formik>
